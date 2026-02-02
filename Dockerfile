@@ -1,11 +1,11 @@
-# Usa a imagem oficial (baseada em Alpine)
+# Força o uso da versão Debian estável do n8n
 FROM n8nio/n8n:latest
 
-# Entra como root para ter poder de instalação
 USER root
 
-# Instala o FFmpeg usando o APK (instalador nativo do Alpine)
-RUN apk add --no-cache ffmpeg
+# Usa o comando 'apt' (mais moderno) e limpa tudo para não dar erro de espaço
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends ffmpeg && \
+    rm -rf /var/lib/apt/lists/*
 
-# Volta para o usuário padrão para manter a segurança
 USER node
